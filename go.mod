@@ -1,7 +1,7 @@
-module github.com/gozuk16/sample_mylib
+module github.com/gozuk16/sample_mylibcall
 
 go 1.16
 
-require github.com/gozuk16/mylib v0.0.0-20210515021146-b04c1963e74b
+require github.com/gozuk16/goss v0.0.0-00010101000000-000000000000
 
-replace github.com/gozuk16/mylib => ../mylib
+replace github.com/gozuk16/goss => ../goss
