@@ -5,9 +5,11 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"os/signal"
 	"path/filepath"
 	"strconv"
 	"sync"
+	"time"
 
 	"github.com/gozuk16/goss"
 	"github.com/gozuk16/goss/file"
@@ -15,17 +17,59 @@ import (
 	"github.com/spf13/nitro"
 )
 
+var timer *nitro.B
+
 func main() {
-	timer := nitro.Initialize()
+	// 時間計測
+	timer = nitro.Initialize()
 	flag.Parse()
 	timer.Step("init")
 
+	// Ctrl+C(割り込み)を受け取る
+	quit := make(chan os.Signal)
+	signal.Notify(quit, os.Interrupt)
+
+	done := make(chan error, 1)
+	go sampleServ(done)
+
+	done2 := make(chan error, 1)
+	go cpuPread(done2)
+
+	select {
+	case <-quit:
+		fmt.Println("Interrup signal accepted.")
+	case err := <-done:
+		fmt.Println("exit.", err)
+	}
+}
+
+func cpuPread(done2 chan<- error) {
+	for {
+		fmt.Println(string(goss.Cpu()))
+		time.Sleep(1 * time.Second)
+	}
+	done2 <- nil
+	close(done2)
+}
+func sampleServ(done chan<- error) {
+	for {
+		goss.RefreshCpu()
+		time.Sleep(5 * time.Second)
+	}
+	done <- nil
+	close(done)
+}
+
+func sample1() {
 	fmt.Println(string(goss.Disk()))
 	timer.Step("server stats: disk")
 	fmt.Println(string(goss.Mem()))
 	timer.Step("server stats: mem")
+
+	goss.RefreshCpu()
 	fmt.Println(string(goss.Cpu()))
 	timer.Step("server stats: cpu")
+
 	fmt.Println(string(goss.Load()))
 	timer.Step("server stats: load")
 	fmt.Println(string(goss.Info()))
