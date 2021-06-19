@@ -110,6 +110,7 @@ func sample1() {
 	timer.Step("get process with goroutine")
 }
 
+// getPid 渡されたサービス名のPIDファイルからPIDを取得して返す。エラーなら-1を返す
 func getPid(service string) int32 {
 	f, err := os.Open(filepath.Join("/var/run", service+".pid"))
 	defer f.Close()
