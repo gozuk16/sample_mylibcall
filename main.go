@@ -23,7 +23,10 @@ func main() {
 }
 
 func sample1() {
-	fmt.Println(string(goss.Disk()))
+	d := goss.Disk()
+	for _, v := range d {
+		fmt.Println(string(v.Json()))
+	}
 	timer.Step("server stats: disk")
 	fmt.Println(string(goss.Mem()))
 	timer.Step("server stats: mem")
@@ -37,13 +40,13 @@ func sample1() {
 	fmt.Println(string(goss.Info().Json()))
 	timer.Step("server stats: info")
 
-	d, err := goss.CrawlDirs("service", "service.json")
+	p, err := goss.CrawlDirs("service", "service.json")
 	if err != nil {
 		fmt.Println(err)
 	}
 	timer.Step("CrawlDirs")
 
-	for _, v := range d {
+	for _, v := range p {
 		fmt.Println(v)
 	}
 	timer.Step("get dirs")
