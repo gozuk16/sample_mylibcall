@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/gozuk16/goss"
-	"github.com/gozuk16/goss/file"
 	"github.com/spf13/nitro"
 )
 
@@ -30,7 +29,7 @@ func sample1() {
 	timer.Step("server stats: mem")
 
 	goss.RefreshCpu()
-	fmt.Println(string(goss.Cpu()))
+	fmt.Println(string(goss.Cpu().Json()))
 	timer.Step("server stats: cpu")
 
 	fmt.Println(string(goss.Load()))
@@ -38,8 +37,7 @@ func sample1() {
 	fmt.Println(string(goss.Info().Json()))
 	timer.Step("server stats: info")
 
-	//d, err := file.CrawlDirs("/Users/gozu/go/src/github.com/gozuk16", "go.mod")
-	d, err := file.CrawlDirs("service", "service.json")
+	d, err := goss.CrawlDirs("service", "service.json")
 	if err != nil {
 		fmt.Println(err)
 	}
