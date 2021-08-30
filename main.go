@@ -23,10 +23,13 @@ func main() {
 }
 
 func sample1() {
-	d := goss.Disk()
-	for _, v := range d {
-		fmt.Println(string(v.Json()))
-	}
+	/*
+		d := goss.Disk()
+		for _, v := range d {
+			fmt.Println(string(v.Json()))
+		}
+	*/
+	fmt.Println(string(goss.Disk().Json()))
 	timer.Step("server stats: disk")
 	fmt.Println(string(goss.Mem()))
 	timer.Step("server stats: mem")
