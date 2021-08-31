@@ -38,8 +38,6 @@ func sample1() {
 	fmt.Println(string(goss.Cpu().Json()))
 	timer.Step("server stats: cpu")
 
-	fmt.Println(string(goss.Load()))
-	timer.Step("server stats: load")
 	fmt.Println(string(goss.Info().Json()))
 	timer.Step("server stats: info")
 
