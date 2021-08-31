@@ -23,15 +23,9 @@ func main() {
 }
 
 func sample1() {
-	/*
-		d := goss.Disk()
-		for _, v := range d {
-			fmt.Println(string(v.Json()))
-		}
-	*/
 	fmt.Println(string(goss.Disk().Json()))
 	timer.Step("server stats: disk")
-	fmt.Println(string(goss.Mem()))
+	fmt.Println(string(goss.Mem().Json()))
 	timer.Step("server stats: mem")
 
 	goss.RefreshCpu()
