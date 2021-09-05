@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/gozuk16/goss"
+	"github.com/gozuk16/gosi"
 	"github.com/spf13/nitro"
 )
 
@@ -18,24 +18,24 @@ func main() {
 
 	sample1()
 
-	//p := goss.Process(501)
+	//p := gosi.Process(501)
 	//fmt.Println(p)
 }
 
 func sample1() {
-	fmt.Println(string(goss.Disk().Json()))
+	fmt.Println(string(gosi.Disk().Json()))
 	timer.Step("server stats: disk")
-	fmt.Println(string(goss.Mem().Json()))
+	fmt.Println(string(gosi.Mem().Json()))
 	timer.Step("server stats: mem")
 
-	goss.RefreshCpu()
-	fmt.Println(string(goss.Cpu().Json()))
+	gosi.RefreshCpu()
+	fmt.Println(string(gosi.Cpu().Json()))
 	timer.Step("server stats: cpu")
 
-	fmt.Println(string(goss.Info().Json()))
+	fmt.Println(string(gosi.Info().Json()))
 	timer.Step("server stats: info")
 
-	p, err := goss.CrawlDirs("service", "service.json")
+	p, err := gosi.CrawlDirs("service", "service.json")
 	if err != nil {
 		fmt.Println(err)
 	}
